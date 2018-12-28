@@ -1,0 +1,65 @@
+<!--BASE TEMPLATE-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Catalogs Tech App</title>
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+	<link rel="stylesheet" href="/static/milligram.min.css">
+	<link rel="stylesheet" href="/static/style.css">
+</head>
+	<body>
+			
+						
+	<div class="wrapper">
+		<header class="header">
+			<div class="container">
+				<a href="/" class="header__title">
+					<h1 class="title__text">Catalogs Tech App  </h1>
+				</a>
+				<div class="header__user">
+					{%if 'email' not in session %}
+					<a href="{{url_for('login')}}" class="user__nav">
+						<button type="button">	Login </button>
+					</a>
+					{% else %}
+					<a href="{{url_for('logout')}}" class="user__nav">
+						<button type="button">	Logout </button>
+					</a>
+					{% endif %}
+				</div>
+			</div>
+		</header>
+		<div class="content">
+			<div class="container">
+					<div class = 'flash'>
+							{% with messages = get_flashed_messages() %}
+						  {% if messages %}
+							  
+							<ul>
+							{% for message in messages %}
+					<div class="alert alert-success alert-dismissible">
+		
+					</div>  
+								<li> <strong> {{ message }} </strong> </li>
+							{% endfor %}
+							</ul>
+							{% endif %}
+						{% endwith %}
+					</div>
+				{% block content %}
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+
+
+
+		
+	
+</body>
+</html>

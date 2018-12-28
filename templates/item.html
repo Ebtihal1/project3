@@ -1,0 +1,38 @@
+<!--ITEM TEMPLATE AND INHERIT FROM BASE TEMPLATE-->
+{% extends "base.html" %}
+
+{% block content %}
+
+
+	<div class = 'pane'>
+		<h1>{{ catagory.name }}
+		</h1>
+		
+		<a href = "{{url_for('newitem', catalog_id = catagory.id )}}">Create New Item</a>
+
+	<h2>Tech item list </h2>
+
+	
+	<ul>
+		{% for i in items %}
+		<li> <p>NAME: {{i.name}}</p> </li>
+		<li>  <p>DESCRIPTION: {{i.description}}</p> </li>
+	
+		<a href='{{url_for('edititem', catalog_id = catagory.id, item_id=i.id ) }}' >
+				
+			Edit item</a>
+			
+	</br>
+		<a href='{{url_for('deleteitem', catalog_id = catagory.id, item_id=i.id ) }}' >
+				
+			Delete item</a>
+	
+</br></br>
+		{% endfor %}
+	</ul>
+	
+
+		</br></br>
+</div>
+
+{% endblock %}

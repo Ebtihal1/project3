@@ -53,5 +53,5 @@ class ItemDetail(Base):
 			'catalog':self.catalogs.name, 
 	    }
 
-engine = create_engine('postgresql://catalog:catalog-pw@localhost/catalog')
+engine = create_engine('postgresql://catalog:password@localhost/catalog')
 Base.metadata.create_all(engine)

@@ -1,0 +1,29 @@
+<!--MAIN TEMPLATE AND INHERIT FROM BASE TEMPLATE-->
+{% extends "base.html" %}
+
+{% block content %}
+<div class = 'pane'>
+		
+<h3>Catalogs Tech APP</h3>
+
+<a href="{{url_for('newcatalog')}}" > <h5> Create a New Catalog </h5> </a>
+
+{% for catalog in catalogs %}
+<a href = "{{url_for('showitem', catalog_id = catalog.id)}}"> <p>{{catalog.name}}</p></a>
+
+{% endfor %}
+
+	<h3>Latest items</h3>
+
+	<ul class="list__items"></ul>
+		{% for item in items %}
+
+				<li class="items__item">
+						<a href="{{url_for('showdetailitem', catalog_id= item.catalog_id ,item_id= item.id)}}" >
+						<span class="item__name">{{item.name}}</span></li></a>
+	
+		{% endfor %}
+
+</div>
+
+{% endblock %}

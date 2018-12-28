@@ -1,0 +1,103 @@
+<!--LOGIN TEMPLATE -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Catalogs Tech App</title>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script src="//apis.google.com/js/platform.js?onload=start"> </script>
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+	<link rel="stylesheet" href="/static/milligram.min.css">
+	<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+	<script>
+		function signInCallback(authResult) {
+			if (authResult['code']) {
+				// Hide the sign-in button now that the user is authorized
+				$('#signinButton').attr('style', 'display: none');
+
+				// Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
+				$.ajax({
+					type: 'POST',
+					url: '/gconnect?state={{STATE}}',
+					processData: false,
+					data: authResult['code'],
+					contentType: 'application/octet-stream; charset=utf-8',
+					success: function(result) {
+			        	// Handle or verify the server response if necessary.
+				        if (result) {
+				        	$('#login').html('Logging in...')
+							window.location.href = "/catalog";
+						} else if (authResult['error']) {
+							console.log('There was an error: ' + authResult['error']);
+						} else {
+							$('#login').html('Failed to make a server-side call. Check your configuration and console.');
+						}
+					}
+				});
+			}
+		}
+	</script>
+
+	
+		
+
+	<div class="wrapper">
+		<header class="header">
+			<div class="container">
+				<a href="/" class="header__title">
+					<h1 class="title__text">Catalogs Tech App</h1>
+				</a>
+				<div class="header__user">
+					{%if 'email' not in session %}
+					<a href="{{url_for('login')}}" class="user__nav">
+						<button type="button">Login</button>
+					</a>
+					{% else %}
+					<a href="{{url_for('logout')}}" class="user__nav">
+						<button type="button">Logout</button>
+					</a>
+					{% endif %}
+				</div>
+			</div>
+		</header>
+		
+				<div id="signInButton">
+					<span class="g-signin"
+						data-scope="openid email"
+						data-clientid="484512268041-johqbp0ur4gc5uicdfp34eqoda0l19lu.apps.googleusercontent.com"
+						data-redirecturi="postmessage"
+						data-accesstype="offline"
+						data-cookiepolicy="single_host_origin"
+						data-callback="signInCallback"
+						data-approvalprompt="force">
+					</span>
+				</div>
+
+				
+			</div>
+		</div>
+	</div>
+	<div class = 'flash'>
+				{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				
+				<ul>
+				{% for message in messages %}
+		<div class="alert alert-success alert-dismissible">
+	 
+		</div>  
+					<li> <strong> {{ message }} </strong> </li>
+				{% endfor %}
+				</ul>
+				{% endif %}
+			{% endwith %}
+		</div>
+</body>
+</html>

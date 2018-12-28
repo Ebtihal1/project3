@@ -1,0 +1,20 @@
+<!--DETAIL ITEM TEMPLATE AND INHERIT FROM BASE TEMPLATE-->
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Item Details</h3>
+<h5 class="category-item__header">
+    <span class="header__title">{{catagory.name}} >>> {{item.name}}</span>
+    <span class="header__bar"></span>
+</h5>
+
+<div class="category-item__description">
+<h4>Description:</h4>
+
+    {{item.description}}
+</div>
+	
+	
+
+{% endblock %}
